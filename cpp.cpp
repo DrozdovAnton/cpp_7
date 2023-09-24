@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <string>
 using namespace std;
 
@@ -7,31 +7,43 @@ using namespace std;
  * @param size Size of array.
  * @param array Dinamic array.
  */
-void setNumArray(size_t size, int array[]);
+void setNumArray(const size_t size, int* array);
 
 /**
  * Get numbers of array.
  * @param size Size of array.
  * @param array Dinamic array.
  */
-void getArray(int array[], size_t size);
+void getArray(int* array, const size_t size);
 
 /**
- * Get min and max numbers of array.
+ * Get min numbers of array.
  * @param size Size of array.
  * @param array Dinamic array.
  */
-void getMinMax(int array[], size_t size);
+int getMin(int* array, const size_t size);
 
-// int* delNumArray(size_t size, int array[]);
-// int* addNumArray(size_t size, int array[]);
+/**
+ * Get max numbers of array.
+ * @param size Size of array.
+ * @param array Dinamic array.
+ */
+int getMax(int* array, const size_t size);
 
 int main()
 {
 	// Ввод размера массива
 	cout << "Input size array: ";
-	size_t n;
+	int n;
 	cin >> n;
+
+	while (n < 1)
+	{
+		cout << "Incorrect size. Value has to be greater zero." << '\n';
+		cout << "Input size array: ";
+		cin >> n;
+	}
+
 	cout << "Size array: " << n << '\n';
 
 	// Создание массива с размером n
@@ -39,38 +51,26 @@ int main()
 	setNumArray(n, arr);
 	getArray(arr, n);
 
-	getMinMax(arr, n);
+	cout << '\n' << "Minimum number of array: ";
+	cout << getMin(arr, n);
+	cout << '\n' << "Maximum number of array: ";
+	cout << getMax(arr, n) << '\n';
 
-	delete[] arr;
+	if (arr != nullptr)
+	{
+		delete[] arr;
+		arr = nullptr;
+	}
+
 	return 0;
-
-	/*
-	// Заполнение и вывод массива
-	setNumArray(n, arr);
-	getArray(arr, n);
-
-	// Удаление элемента из массива
-	int *newArray = delNumArray(n, arr);
-	getArray(newArray, n-1);
-	delete[] arr;
-
-	// Добавление элемента в массив
-	int* newArr = addNumArray(n - 1, newArray);
-	getArray(newArr, n);
-	delete[] newArray;
-
-	delete[] newArr;
-	return 0;
-	*/
-
 }
 
-void setNumArray(size_t size, int array[])
+void setNumArray(const size_t size, int* array)
 {
 	cout << '\n' << "Set nums array" << '\n';
 
-	for (int i = 0; i < size; i++)
-	{ 
+	for (size_t i = 0; i < size; i++)
+	{
 		int x;
 		cout << i + 1 << ": ";
 		cin >> x;
@@ -79,74 +79,42 @@ void setNumArray(size_t size, int array[])
 	}
 }
 
-/*int* delNumArray(size_t size, int array[])
-{
-	cout << '\n' << "Delete num of array" << '\n';
-	cout << "Input index (0; 1; ...): ";
-	int index;
-	cin >> index;
-
-	int* newArray = new int[size-1];
-	int j = 0;
-
-	for (int i = 0; i < size; i++)
-	{
-		if (i != index)
-		{
-			newArray[j] = array[i];
-			j++;
-		}
-	}
-
-	return newArray;
-}
-
-int* addNumArray(size_t size, int array[])
-{
-	cout << '\n' << "Add num" << '\n';
-
-	int* newArr = new int[size + 1];
-
-	int newNum;
-	cout << "Input num for add: ";
-	cin >> newNum;
-
-	for (int i = 0; i < size; i++)
-	{
-		newArr[i] = array[i];
-	}
-	newArr[size] = newNum;
-
-	return newArr;
-}*/
-
-void getArray(int array[], size_t size)
+void getArray(int* array, const size_t size)
 {
 	cout << '\n' << "Array:" << '\n';
-	for (int i = 0; i < size; i++)
+
+	for (size_t i = 0; i < size; i++)
 	{
 		cout << array[i] << ' ';
 	}
+
 	cout << '\n';
 }
 
-void getMinMax(int array[], size_t size)
+int getMin(int* array, const size_t size)
 {
 	int minNum;
-	int maxNum;
 
 	minNum = array[0];
-	maxNum = array[0];
 
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
 		if (minNum > array[i])
 		{
 			minNum = array[i];
 		}
 	}
+	
+	return minNum;
+}
 
-	for (int i = 0; i < size; i++)
+int getMax(int* array, const size_t size)
+{
+	int maxNum;
+
+	maxNum = array[0];
+
+	for (size_t i = 0; i < size; i++)
 	{
 		if (maxNum < array[i])
 		{
@@ -154,5 +122,5 @@ void getMinMax(int array[], size_t size)
 		}
 	}
 
-	cout << '\n' << "Mininun num: " << minNum << '\n' << "Maximum num: " << maxNum << '\n';
+	return maxNum;
 }
