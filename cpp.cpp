@@ -37,11 +37,10 @@ int main()
 	int n;
 	cin >> n;
 
-	while (n < 1)
+	if (n < 0)
 	{
 		cout << "Incorrect size. Value has to be greater zero." << '\n';
 		cout << "Input size array: ";
-		cin >> n;
 	}
 
 	cout << "Size array: " << n << '\n';
@@ -93,9 +92,7 @@ void getArray(int* array, const size_t size)
 
 int getMin(int* array, const size_t size)
 {
-	int minNum;
-
-	minNum = array[0];
+	int minNum = array[0];
 
 	for (size_t i = 0; i < size; i++)
 	{
@@ -110,9 +107,7 @@ int getMin(int* array, const size_t size)
 
 int getMax(int* array, const size_t size)
 {
-	int maxNum;
-
-	maxNum = array[0];
+	int maxNum = array[0];
 
 	for (size_t i = 0; i < size; i++)
 	{
